@@ -15,11 +15,11 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 type Documents = {
     "\n  query GetCharacter($id: ID!) {\n    character(id: $id) {\n      name\n      status\n      species\n      gender\n      origin {\n        name\n      }\n      location {\n        name\n      }\n      image\n    }\n  }\n": typeof types.GetCharacterDocument,
-    "\n  query GetCharacters {\n    characters {\n      info {\n        count\n      }\n      results {\n        id\n        name\n        status\n        species\n\n        location {\n          name\n        }\n        image\n        origin {\n          name\n        }\n        location {\n          name\n        }\n      }\n    }\n  }\n": typeof types.GetCharactersDocument,
+    "\n  query GetCharacters($page: Int) {\n    characters(page: $page) {\n      info {\n        count\n        pages\n        next\n        prev\n      }\n      results {\n        id\n        name\n        status\n        species\n\n        location {\n          name\n        }\n        image\n        origin {\n          name\n        }\n      }\n    }\n  }\n": typeof types.GetCharactersDocument,
 };
 const documents: Documents = {
     "\n  query GetCharacter($id: ID!) {\n    character(id: $id) {\n      name\n      status\n      species\n      gender\n      origin {\n        name\n      }\n      location {\n        name\n      }\n      image\n    }\n  }\n": types.GetCharacterDocument,
-    "\n  query GetCharacters {\n    characters {\n      info {\n        count\n      }\n      results {\n        id\n        name\n        status\n        species\n\n        location {\n          name\n        }\n        image\n        origin {\n          name\n        }\n        location {\n          name\n        }\n      }\n    }\n  }\n": types.GetCharactersDocument,
+    "\n  query GetCharacters($page: Int) {\n    characters(page: $page) {\n      info {\n        count\n        pages\n        next\n        prev\n      }\n      results {\n        id\n        name\n        status\n        species\n\n        location {\n          name\n        }\n        image\n        origin {\n          name\n        }\n      }\n    }\n  }\n": types.GetCharactersDocument,
 };
 
 /**
@@ -43,7 +43,7 @@ export function graphql(source: "\n  query GetCharacter($id: ID!) {\n    charact
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GetCharacters {\n    characters {\n      info {\n        count\n      }\n      results {\n        id\n        name\n        status\n        species\n\n        location {\n          name\n        }\n        image\n        origin {\n          name\n        }\n        location {\n          name\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetCharacters {\n    characters {\n      info {\n        count\n      }\n      results {\n        id\n        name\n        status\n        species\n\n        location {\n          name\n        }\n        image\n        origin {\n          name\n        }\n        location {\n          name\n        }\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query GetCharacters($page: Int) {\n    characters(page: $page) {\n      info {\n        count\n        pages\n        next\n        prev\n      }\n      results {\n        id\n        name\n        status\n        species\n\n        location {\n          name\n        }\n        image\n        origin {\n          name\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetCharacters($page: Int) {\n    characters(page: $page) {\n      info {\n        count\n        pages\n        next\n        prev\n      }\n      results {\n        id\n        name\n        status\n        species\n\n        location {\n          name\n        }\n        image\n        origin {\n          name\n        }\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

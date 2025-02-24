@@ -1,12 +1,16 @@
 import { useQuery } from "@apollo/client";
 import { graphql } from "../../gql";
 import { GetCharactersQuery } from "../../gql/graphql";
+import { useState } from "react";
 
 const GET_CHARACTERS = graphql(`
-  query GetCharacters {
-    characters {
+  query GetCharacters($page: Int) {
+    characters(page: $page) {
       info {
         count
+        pages
+        next
+        prev
       }
       results {
         id
@@ -21,16 +25,33 @@ const GET_CHARACTERS = graphql(`
         origin {
           name
         }
-        location {
-          name
-        }
       }
     }
   }
 `);
 
 export default function Home() {
-  const { data, loading, error } = useQuery<GetCharactersQuery>(GET_CHARACTERS);
+  const [page, setPage] = useState(1);
+  const { data, loading, error, refetch } = useQuery<GetCharactersQuery>(
+    GET_CHARACTERS,
+    { variables: { page } }
+  );
+
+  const pageInfo = data?.characters?.info;
+
+  const handleNext = () => {
+    if (pageInfo?.next) {
+      setPage(pageInfo.next);
+      refetch({ page: pageInfo.next });
+    }
+  };
+
+  const handlePrev = () => {
+    if (pageInfo?.prev) {
+      setPage(pageInfo.prev);
+      refetch({ page: pageInfo.prev });
+    }
+  };
 
   if (loading) {
     return <h1>Loading...</h1>;
@@ -45,6 +66,8 @@ export default function Home() {
 
   return (
     <div style={{ display: "flex", flexWrap: "wrap" }}>
+      <button onClick={handlePrev}>prev</button>
+      <button onClick={handleNext}>next</button>
       {characters?.map((character) => {
         if (!character || !character.location) return null;
         return (
