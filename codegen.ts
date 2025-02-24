@@ -1,23 +1,19 @@
-import type { CodegenConfig } from "@graphql-codegen/cli";
+import { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-  schema: "https://graphql.org/graphql/",
-  documents: ["src/**/*.tsx"],
-  ignoreNoDocuments: true,
+  schema: "https://rickandmortyapi.com/graphql", // URL de l'API Rick and Morty
+  documents: ["src/**/*.tsx", "src/**/*.ts"],
   generates: {
-    "./src/graphql/": {
+    "./src/gql/": {
       preset: "client",
-      config: {
-        documentMode: "string",
-      },
-    },
-    "./schema.graphql": {
-      plugins: ["schema-ast"],
-      config: {
-        includeDirectives: true,
+      plugins: [],
+      presetConfig: {
+        gqlTagName: "graphql",
+        fragmentMasking: false,
       },
     },
   },
+  ignoreNoDocuments: true, // Utile pendant le développement
 };
 
 export default config;
