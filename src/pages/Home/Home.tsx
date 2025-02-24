@@ -38,14 +38,14 @@ export default function Home() {
   if (error) {
     return <h1>Error</h1>;
   }
-  if (!data?.characters?.results) {
-    return <h1>No data</h1>;
-  }
-  console.log("🚀 ~ Home ~ data:", data);
+
+  const characters = data?.characters?.results?.filter(
+    (element) => element !== null
+  );
 
   return (
     <div style={{ display: "flex", flexWrap: "wrap" }}>
-      {data?.characters.results.map((character) => {
+      {characters?.map((character) => {
         if (!character || !character.location) return null;
         return (
           <div key={character.id ?? ""} style={{ margin: "1rem" }}>

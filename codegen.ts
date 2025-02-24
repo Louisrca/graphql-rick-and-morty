@@ -1,7 +1,7 @@
 import { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-  schema: "https://rickandmortyapi.com/graphql", // URL de l'API Rick and Morty
+  schema: "https://rickandmortyapi.com/graphql", 
   documents: ["src/**/*.tsx", "src/**/*.ts"],
   generates: {
     "./src/gql/": {
@@ -13,7 +13,7 @@ const config: CodegenConfig = {
       },
     },
   },
-  ignoreNoDocuments: true, // Utile pendant le développement
+  ignoreNoDocuments: true,
 };
 
 export default config;
